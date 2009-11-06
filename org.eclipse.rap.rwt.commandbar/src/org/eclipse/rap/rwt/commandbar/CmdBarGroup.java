@@ -7,9 +7,7 @@ import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Layout;
 
 public class CmdBarGroup {
 
@@ -18,7 +16,6 @@ public class CmdBarGroup {
 
 	public CmdBarGroup(final CmdBar parent, int style) {
 		Composite grpContainer = new Composite(parent.getContainer(), SWT.NONE);
-		
 		parent.addNewGroup(this);
 		grpContainer.setLayoutData(new GridData(GridData.FILL_VERTICAL));
 		
