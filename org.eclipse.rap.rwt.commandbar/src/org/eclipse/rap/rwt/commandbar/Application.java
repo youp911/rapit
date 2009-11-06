@@ -1,11 +1,8 @@
 package org.eclipse.rap.rwt.commandbar;
 
-import java.io.InputStream;
 
-import org.eclipse.rwt.graphics.Graphics;
 import org.eclipse.rwt.lifecycle.IEntryPoint;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -46,15 +43,15 @@ public class Application implements IEntryPoint {
 		group1.setText("commands");
 		
 		CmdBarButton btn1 = factory.createLargeButton(group1);
-		btn1.getBtn().setImage(loadImage("img3.png"));
+		btn1.getBtn().setImage(Utils.loadImage("img3.png"));
 		btn1.getBtn().setText("Let's go");
 		
 		CmdBarButton btn2 = factory.createSmallButton(group1);
-		btn2.getBtn().setImage(loadImage("img1.png"));
+		btn2.getBtn().setImage(Utils.loadImage("img1.png"));
 		btn2.getBtn().setText("Let's go");
 		
 		CmdBarButton btn3 = factory.createSmallButton(group1);
-		btn3.getBtn().setImage(loadImage("img2.png"));
+		btn3.getBtn().setImage(Utils.loadImage("img2.png"));
 		btn3.getBtn().setText("Let's go");
 
 	
@@ -62,7 +59,7 @@ public class Application implements IEntryPoint {
 		group2.setText("tasks");
 	
 		CmdBarButton btn21 = factory.createLargeButton(group2);
-		btn21.getBtn().setImage(loadImage("img1.png"));
+		btn21.getBtn().setImage(Utils.loadImage("img1.png"));
 		btn21.getBtn().setText("Quite a large \ntask to do");
 		
 		CmdBarMenu menu = factory.createMenu(btn21);
@@ -71,15 +68,7 @@ public class Application implements IEntryPoint {
 		groupMenu.setText("tasks");
 	
 		CmdBarButton btnMenu = factory.createLargeButton(groupMenu);
-		btnMenu.getBtn().setImage(loadImage("img1.png"));
+		btnMenu.getBtn().setImage(Utils.loadImage("img1.png"));
 		btnMenu.getBtn().setText("Quite a large \ntask to do");
-	}
-
-	private Image loadImage(final String name) {
-		final InputStream imageStream = getClass().getClassLoader().getResourceAsStream("/icons/" + name);
-		if (imageStream != null) {
-			return Graphics.getImage(name, imageStream);
-		}
-		return null;
 	}
 }
