@@ -22,6 +22,11 @@ Composite.cmdGroupFrame {
 	border-radius: 6px;
 }
 
+Composite:hover.cmdGroupFrame {
+	background-image: gradient(linear, left top, left bottom, from(#FFFFFF),
+	color-stop(45%, #E1E8F2), color-stop(46%, #D4DAE6), to(#EDF1F8) );
+  /*background-color: #DEE3E7;*/
+}
 
 Label.cmdGroupLabel {
   font:12px 'Segoe UI';
@@ -32,10 +37,11 @@ Label.cmdGroupLabel {
   border-radius: 4px;
 }
 
+/*
 Label:hover.cmdGroupLabel {
   background-color: #E7EAED;
 }
-
+*/
 Button.cmdSmall {
 	/*background-image: gradient(linear, left top, left bottom, from(#ffffff),
 		color-stop(48%, #f0f0f0), color-stop(52%, #e0e0e0), to(#cccccc) );*/

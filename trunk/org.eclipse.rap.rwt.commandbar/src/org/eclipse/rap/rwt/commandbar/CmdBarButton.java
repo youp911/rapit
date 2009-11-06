@@ -2,7 +2,6 @@ package org.eclipse.rap.rwt.commandbar;
 
 import org.eclipse.rwt.lifecycle.WidgetUtil;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 
 public class CmdBarButton {
