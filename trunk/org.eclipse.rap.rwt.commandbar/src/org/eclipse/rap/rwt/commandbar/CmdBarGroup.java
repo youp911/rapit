@@ -13,9 +13,13 @@ public class CmdBarGroup {
 
 	private Composite group;
 	private Label label;
+	private boolean compact;
+	private Composite grpContainer;
+	private CmdBarButton compactButton;
+	private int uncompactedWidth;
 
 	public CmdBarGroup(final CmdBar parent, int style) {
-		Composite grpContainer = new Composite(parent.getContainer(), SWT.NONE);
+		grpContainer = new Composite(parent.getContainer(), SWT.NONE);
 		parent.addNewGroup(this);
 		grpContainer.setLayoutData(new GridData(GridData.FILL_VERTICAL));
 		
@@ -33,15 +37,12 @@ public class CmdBarGroup {
 		grpContainer.setLayout(containerLayout );
 		grpContainer.setData(WidgetUtil.CUSTOM_VARIANT, "cmdGroupFrame");
 		
-//		group = new Group(grpContainer, style);
 		group = new Composite(grpContainer, style);
 		group.setData(WidgetUtil.CUSTOM_VARIANT, "cmdGroup");
 		group.setLayoutData(new GridData(GridData.FILL_BOTH));
-//		bar.setText(text);
 		
 		label = new Label(grpContainer, SWT.NONE);
 		GridData layoutData = new GridData(GridData.FILL_HORIZONTAL);
-//		layoutData.verticalIndent = 2;
 		label.setLayoutData(layoutData);
 		label.setData(WidgetUtil.CUSTOM_VARIANT, "cmdGroupLabel");
 		
@@ -77,7 +78,70 @@ public class CmdBarGroup {
 		label.setText(text);
 	}
 
-	Composite getContainer() {
+	Composite getButtonContainer() {
 		return group;
 	}
+
+	public boolean isCompact() {
+		return this.compact;
+	}
+
+	public void makeCompact() {
+		if (!isCompact()) {
+			this.compact = true;
+			this.uncompactedWidth = getCurrentWidth();
+			Utils.hideControl(group);
+			Utils.hideControl(label);
+			
+			if (this.compactButton == null) {
+				this.compactButton = createCompactButton();
+			}
+			Utils.showControl(compactButton.getBtn());
+			compactButton.getBtn().getParent().layout();
+		}
+	}
+
+	private CmdBarButton createCompactButton() {
+		GridData layoutData;
+		CmdBarButton btn = new CmdBarButton(getGrpContainer());
+		btn.getBtn().setText(label.getText());
+		btn.getBtn().setAlignment(SWT.CENTER);
+//		btn.getBtn().setImage();
+//		btn.getBtn().setData(WidgetUtil.CUSTOM_VARIANT, "dropDownButton");
+		layoutData = new GridData(GridData.FILL_BOTH);
+		layoutData.minimumWidth = CommandBarFactory.LARGE_BUTTON_MINIMUM_WIDTH;
+		btn.getBtn().setLayoutData(layoutData);
+		return btn;
+	}
+
+	public int getUncompactedWidth() {
+		return uncompactedWidth;
+	}
+
+	/**
+	 * Root widget of this group. Holds the button container ({@link #getButtonContainer()})
+	 * and a label.
+	 * @return
+	 */
+	Composite getGrpContainer() {
+		return grpContainer;
+	}
+
+	public void unmakeCompact() {
+		if (isCompact()) {
+			this.compact = false;
+			Utils.showControl(group);
+			Utils.showControl(label);
+			
+			if (this.compactButton != null) {
+				Utils.hideControl(this.compactButton.getBtn());
+			}
+			group.getParent().layout();
+		}
+	}
+
+	public int getCurrentWidth() {
+		return getGrpContainer().getSize().x;
+	}
+
 }

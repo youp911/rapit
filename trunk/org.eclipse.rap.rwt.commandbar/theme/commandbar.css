@@ -42,15 +42,11 @@ Label:hover.cmdGroupLabel {
   background-color: #E7EAED;
 }
 */
+
 Button.cmdSmall {
-	/*background-image: gradient(linear, left top, left bottom, from(#ffffff),
-		color-stop(48%, #f0f0f0), color-stop(52%, #e0e0e0), to(#cccccc) );*/
 	background-color: transparent;
 	font:12px 'Segoe UI';
 	border: none;
-	/*border-radius: 4px;
-	border: 1px solid #C8C8C8;
-	*/
 	spacing: 6px;
 }
 
