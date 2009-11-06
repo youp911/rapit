@@ -1,0 +1,66 @@
+Composite.cmdBar {
+	background-image: gradient(linear, left top, left bottom, from(#FDFDFD),
+		color-stop(45%, #D0D7E1), color-stop(46%, #C3CAD4), to(#E8EBF0) );
+}
+
+Group.cmdGroup {
+	background-color: transparent;
+}
+
+/*
+Group:hover.cmdGroup {
+  background-color: #DEE3E7;
+}
+
+Group-Frame:hover.cmdGroup {
+  background-color: #DEE3E7;
+}
+*/
+
+Composite.cmdGroupFrame {
+	border: 1px solid #C8C8C8;
+	border-radius: 6px;
+}
+
+
+Label.cmdGroupLabel {
+  font:12px 'Segoe UI';
+  background-color: #DEE3E7;
+  color: inherit;
+
+  border: 1px solid #DEE3E7;
+  border-radius: 4px;
+}
+
+Label:hover.cmdGroupLabel {
+  background-color: #E7EAED;
+}
+
+Button.cmdSmall {
+	/*background-image: gradient(linear, left top, left bottom, from(#ffffff),
+		color-stop(48%, #f0f0f0), color-stop(52%, #e0e0e0), to(#cccccc) );*/
+	background-color: transparent;
+	font:12px 'Segoe UI';
+	border: none;
+	/*border-radius: 4px;
+	border: 1px solid #C8C8C8;
+	*/
+	spacing: 6px;
+}
+
+Button:hover.cmdSmall {
+	border: 1px solid #C8C8C8;
+	border-radius: 4px;
+	background-image: gradient(linear, left top, left bottom, from(#ffffff),
+		color-stop(49%, #FFECAC), color-stop(50%, #FFDA59), to(#FFFCDF) );
+}
+
+Button:pressed.cmdSmall {
+	border: 1px solid #A78E66;
+	border-radius: 4px;
+	background-image: gradient(linear, left top, left bottom, from(#EAD1B2),
+		color-stop(49%, #FCD38A), color-stop(50%, #FBC05A), to(#FDE79B) );
+  	padding: 5px 6px;
+}
+
+ 
