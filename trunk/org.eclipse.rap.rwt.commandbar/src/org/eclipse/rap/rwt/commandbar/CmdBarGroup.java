@@ -17,6 +17,11 @@ public class CmdBarGroup {
 	private Composite grpContainer;
 	private CmdBarButton compactButton;
 	private int uncompactedWidth;
+	private int uncompactedHeight;
+
+	public int getUncompactedHeight() {
+		return uncompactedHeight;
+	}
 
 	public CmdBarGroup(final CmdBar parent, int style) {
 		grpContainer = new Composite(parent.getContainer(), SWT.NONE);
@@ -77,6 +82,10 @@ public class CmdBarGroup {
 	public void setText(final String text) {
 		label.setText(text);
 	}
+	
+	public String getText() {
+		return label.getText();
+	}
 
 	Composite getButtonContainer() {
 		return group;
@@ -90,6 +99,7 @@ public class CmdBarGroup {
 		if (!isCompact()) {
 			this.compact = true;
 			this.uncompactedWidth = getCurrentWidth();
+			this.uncompactedHeight = getCurrentHeight();
 			Utils.hideControl(group);
 			Utils.hideControl(label);
 			
@@ -106,15 +116,14 @@ public class CmdBarGroup {
 		CmdBarButton btn = new CmdBarButton(getGrpContainer());
 		btn.getBtn().setText(label.getText());
 		btn.getBtn().setAlignment(SWT.CENTER);
-//		btn.getBtn().setImage();
-//		btn.getBtn().setData(WidgetUtil.CUSTOM_VARIANT, "dropDownButton");
 		layoutData = new GridData(GridData.FILL_BOTH);
 		layoutData.minimumWidth = CommandBarFactory.LARGE_BUTTON_MINIMUM_WIDTH;
+		layoutData.minimumHeight = getUncompactedHeight() - 5; //TODO: 5 is container GridLayout#horizontalSpacing
 		btn.getBtn().setLayoutData(layoutData);
 		return btn;
 	}
 
-	public int getUncompactedWidth() {
+	int getUncompactedWidth() {
 		return uncompactedWidth;
 	}
 
@@ -143,5 +152,14 @@ public class CmdBarGroup {
 	public int getCurrentWidth() {
 		return getGrpContainer().getSize().x;
 	}
+	
+	public int getCurrentHeight() {
+		return getGrpContainer().getSize().y;
+	}
 
+	@Override
+	public String toString() {
+		return new StringBuilder(getClass().getName()).append("[").append(getText()).append("]").toString();
+	}
+	
 }
