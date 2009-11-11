@@ -1,12 +1,20 @@
 package org.eclipse.rap.rwt.commandbar;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.eclipse.rap.rwt.commandbar.internal.ICmdBarMenuListener;
 import org.eclipse.rwt.lifecycle.WidgetUtil;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 
 public class CmdBarGroup {
@@ -19,10 +27,9 @@ public class CmdBarGroup {
 	private int uncompactedWidth;
 	private int uncompactedHeight;
 
-	public int getUncompactedHeight() {
-		return uncompactedHeight;
-	}
-
+	private List<CmdBarButton> buttons;
+	private boolean buttonListHasChanged = false;
+	
 	public CmdBarGroup(final CmdBar parent, int style) {
 		grpContainer = new Composite(parent.getContainer(), SWT.NONE);
 		parent.addNewGroup(this);
@@ -63,22 +70,6 @@ public class CmdBarGroup {
 		group.setLayout(layout);
 	}
 
-	public GridLayout createGridNoMargin(int numColumns) {
-		GridLayout layout = new GridLayout(numColumns, false);
-		layout.verticalSpacing = 0;
-		layout.marginHeight = 0;
-		layout.marginWidth = 0;
-		layout.marginTop = 0;
-		layout.marginBottom = 0;
-		layout.marginLeft = 0;
-		layout.marginRight = 0;
-		return layout;
-	}
-	
-	public void add(CmdBarButton button) {
-		
-	}
-	
 	public void setText(final String text) {
 		label.setText(text);
 	}
@@ -120,7 +111,66 @@ public class CmdBarGroup {
 		layoutData.minimumWidth = CommandBarFactory.LARGE_BUTTON_MINIMUM_WIDTH;
 		layoutData.minimumHeight = getUncompactedHeight() - 5; //TODO: 5 is container GridLayout#horizontalSpacing
 		btn.getBtn().setLayoutData(layoutData);
+		
+		// Attach menu
+		CommandBarFactory factory = new CommandBarFactory();
+		final CmdBarMenu menu = factory.createMenu(btn);
+		final CmdBarGroup menuGroup = factory.createGroup(menu.getCmdBar());
+		menu.addCmdBarMenuListener(new ICmdBarMenuListener() {
+			
+			public void beforeOpen() {
+				popuplateMenuBeforeOpen(menu, menuGroup);
+			}
+		});
 		return btn;
+	}
+
+	
+	protected void popuplateMenuBeforeOpen(final CmdBarMenu menu, final CmdBarGroup menuGroup) {
+		
+		if (buttonListHasChanged) {
+			buttonListHasChanged = false;
+			// TODO: [sr] impl more sophisticated change detection
+			
+			// Erase all old content
+			menuGroup.removeAllButtons();
+			
+			final SelectionListener closeListener = new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					menu.close();
+				}
+			};
+			
+			// Copy content to menu
+			CommandBarFactory factory = new CommandBarFactory();
+			for (CmdBarButton button: getButtons()) {
+				CmdBarButton menuBtn = factory.createButton(menuGroup, button.getStyle());
+				menuBtn.setImage(button.getImage());
+				menuBtn.setText(button.getText());
+				
+				// Add selection listener to every button to ensure menu is closed on click
+				menuBtn.getBtn().addSelectionListener(closeListener);
+				
+				// Copy selection Listeners
+				List<SelectionListener> listeners = button.getSelectionListeners();
+				if (listeners != null) {
+					for (SelectionListener listener: listeners) {
+						menuBtn.addSelectionListener(listener);
+					}
+				}
+				
+			}
+		}
+		
+	}
+
+	private void removeAllButtons() {
+		Control[] controls = getButtonContainer().getChildren();
+		for (Control ctrl: controls) {
+			ctrl.dispose();
+		}
+		assert getButtons().size() == 0;
 	}
 
 	int getUncompactedWidth() {
@@ -148,6 +198,16 @@ public class CmdBarGroup {
 			group.getParent().layout();
 		}
 	}
+	protected List<CmdBarButton> getButtons() {
+		if (buttons == null) {
+			buttons = new ArrayList<CmdBarButton>();
+		}
+		return buttons;
+	}
+
+	public int getUncompactedHeight() {
+		return uncompactedHeight;
+	}
 
 	public int getCurrentWidth() {
 		return getGrpContainer().getSize().x;
@@ -160,6 +220,16 @@ public class CmdBarGroup {
 	@Override
 	public String toString() {
 		return new StringBuilder(getClass().getName()).append("[").append(getText()).append("]").toString();
+	}
+
+	void addNewButton(CmdBarButton cmdBarButton) {
+		getButtons().add(cmdBarButton);
+		buttonListHasChanged = true;
+	}
+
+	void removeButton(CmdBarButton cmdBarButton) {
+		getButtons().remove(cmdBarButton);
+		buttonListHasChanged = true;
 	}
 	
 }
