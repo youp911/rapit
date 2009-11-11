@@ -28,6 +28,7 @@ public class CmdBar {
 				handleResize();
 			}
 		});
+		commandBar.setLayout(new GridLayout(1, false));
 	}
 	
 	/**

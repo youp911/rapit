@@ -5,7 +5,7 @@
    <extension
          point="org.eclipse.rap.ui.entrypoint">
       <entrypoint
-            class="org.eclipse.rap.rwt.commandbar.Application"
+            class="demo.Application"
             parameter="hello"
             id="org.eclipse.rap.rwt.commandbar.Application">
       </entrypoint>

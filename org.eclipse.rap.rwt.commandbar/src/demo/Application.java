@@ -1,8 +1,16 @@
-package org.eclipse.rap.rwt.commandbar;
+package demo;
 
 
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.rap.rwt.commandbar.CmdBar;
+import org.eclipse.rap.rwt.commandbar.CmdBarButton;
+import org.eclipse.rap.rwt.commandbar.CmdBarGroup;
+import org.eclipse.rap.rwt.commandbar.CommandBarFactory;
+import org.eclipse.rap.rwt.commandbar.Utils;
 import org.eclipse.rwt.lifecycle.IEntryPoint;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -33,7 +41,7 @@ public class Application implements IEntryPoint {
 	}
 
 	
-	public void createContent(Composite parent) {
+	public void createContent(final Composite parent) {
 		CommandBarFactory factory = new CommandBarFactory();
 		
 		CmdBar bar = factory.createCmdBar(parent);
@@ -43,32 +51,38 @@ public class Application implements IEntryPoint {
 		group1.setText("commands");
 		
 		CmdBarButton btn1 = factory.createLargeButton(group1);
-		btn1.getBtn().setImage(Utils.loadImage("img3.png"));
-		btn1.getBtn().setText("Let's go");
+		btn1.setImage(Utils.loadImage("img3.png"));
+		btn1.setText("Let's go");
 		
 		CmdBarButton btn2 = factory.createSmallButton(group1);
-		btn2.getBtn().setImage(Utils.loadImage("img1.png"));
-		btn2.getBtn().setText("Let's go");
+		btn2.setImage(Utils.loadImage("img1.png"));
+		btn2.setText("Let's go");
 		
 		CmdBarButton btn3 = factory.createSmallButton(group1);
-		btn3.getBtn().setImage(Utils.loadImage("img2.png"));
-		btn3.getBtn().setText("Let's go");
+		btn3.setImage(Utils.loadImage("img2.png"));
+		btn3.setText("Let's go");
 
 	
 		CmdBarGroup group2 = factory.createGroup(bar);
 		group2.setText("tasks");
 	
 		CmdBarButton btn21 = factory.createLargeButton(group2);
-		btn21.getBtn().setImage(Utils.loadImage("img1.png"));
-		btn21.getBtn().setText("Quite a large \ntask to do");
+		btn21.setImage(Utils.loadImage("img1.png"));
+		btn21.setText("Quite a large \ntask to do");
+		btn21.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				MessageDialog.openInformation(parent.getShell(), "Wise words", "Don’t take life too serious – you won’t get out of it alive!");
+			}
+		});
 		
-		CmdBarMenu menu = factory.createMenu(btn21);
-		
-		CmdBarGroup groupMenu = factory.createGroup(menu.getCmdBar());
-		groupMenu.setText("tasks");
-	
-		CmdBarButton btnMenu = factory.createLargeButton(groupMenu);
-		btnMenu.getBtn().setImage(Utils.loadImage("img1.png"));
-		btnMenu.getBtn().setText("Quite a large \ntask to do");
+//		CmdBarMenu menu = factory.createMenu(btn21);
+//		
+//		CmdBarGroup groupMenu = factory.createGroup(menu.getCmdBar());
+//		groupMenu.setText("tasks");
+//	
+//		CmdBarButton btnMenu = factory.createLargeButton(groupMenu);
+//		btnMenu.setImage(Utils.loadImage("img1.png"));
+//		btnMenu.setText("Quite a large \ntask to do");
 	}
 }
