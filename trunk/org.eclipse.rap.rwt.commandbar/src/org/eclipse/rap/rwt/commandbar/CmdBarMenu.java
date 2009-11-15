@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.rap.rwt.commandbar.internal.ICmdBarMenuListener;
+import org.eclipse.rwt.lifecycle.WidgetUtil;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -11,6 +12,7 @@ import org.eclipse.swt.events.ShellAdapter;
 import org.eclipse.swt.events.ShellEvent;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Shell;
 
@@ -25,7 +27,7 @@ public class CmdBarMenu {
 		parentBtn = parent.getBtn();
 		menu = new Shell(parentBtn.getShell(), SWT.NONE);
 		menu.setLayout(new FillLayout());
-		// TODO: setStyle data
+		menu.setData(WidgetUtil.CUSTOM_VARIANT, "cmdMenuShell");
 		
 		parentBtn.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -40,6 +42,16 @@ public class CmdBarMenu {
 				menu.setVisible(false);
 			}
 		});
+		
+		// Bar should have no border so that the border rounded corners are define the shell's shape
+		GridLayout layout = new GridLayout(1, false);
+		layout.horizontalSpacing = 0;
+		layout.verticalSpacing = 0;
+		layout.marginHeight = 0;
+		layout.marginWidth = 0;
+		layout.marginRight = 2;
+		cmdBar.getContainer().setLayout(layout);
+		cmdBar.getContainer().setData(WidgetUtil.CUSTOM_VARIANT, null);
 	}
 	
 	public void open() {
@@ -48,7 +60,7 @@ public class CmdBarMenu {
 		menu.pack();
 		final Point btnLoc = parentBtn.getDisplay().map(parentBtn, null, parentBtn.getLocation());
 		final Point btnSize = parentBtn.getSize();
-		final Point menuLoc = new Point(btnLoc.x, btnLoc.y + btnSize.y + 5);
+		final Point menuLoc = new Point(btnLoc.x, btnLoc.y + btnSize.y);
 		menu.setLocation(menuLoc);
 		menu.open();
 	}

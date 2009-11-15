@@ -7,16 +7,7 @@ Group.cmdGroup {
 	background-color: transparent;
 }
 
-/*
-Group:hover.cmdGroup {
-  background-color: #DEE3E7;
-}
-
-Group-Frame:hover.cmdGroup {
-  background-color: #DEE3E7;
-}
-*/
-
+/* Group container for the Command bar*/
 Composite.cmdGroupFrame {
 	border: 1px solid #C8C8C8;
 	border-radius: 6px;
@@ -25,8 +16,21 @@ Composite.cmdGroupFrame {
 Composite:hover.cmdGroupFrame {
 	background-image: gradient(linear, left top, left bottom, from(#FFFFFF),
 	color-stop(45%, #E1E8F2), color-stop(46%, #D4DAE6), to(#EDF1F8) );
-  /*background-color: #DEE3E7;*/
 }
+
+/* Group container for the popup menu*/
+Composite.cmdGroupFrameMenu {
+	border: 1px solid #C8C8C8;
+	border-radius: 6px;
+	background-image: gradient(linear, left top, left bottom, from(#FDFDFD),
+		color-stop(45%, #D0D7E1), color-stop(46%, #C3CAD4), to(#E8EBF0) );
+}
+
+Composite:hover.cmdGroupFrameMenu {
+	background-image: gradient(linear, left top, left bottom, from(#FFFFFF),
+	color-stop(45%, #E1E8F2), color-stop(46%, #D4DAE6), to(#EDF1F8) );
+}
+
 
 Label.cmdGroupLabel {
   font:12px 'Segoe UI';
@@ -65,4 +69,34 @@ Button:pressed.cmdSmall {
   	padding: 5px 6px;
 }
 
+
+Button.cmdCompactBtn {
+	background-color: transparent;
+	font:12px 'Segoe UI';
+	border: none;
+	spacing: 6px;
+}
+
+Button:hover.cmdCompactBtn {
+	/* No border (transparent)*/
+	border: 1px solid transparent;
+	border-radius: 4px;
+	background-image: gradient(linear, left top, left bottom, from(#ffffff),
+	color-stop(49%, #FFECAC), color-stop(50%, #FFDA59), to(#FFFCDF) );
+}
+
+Button:pressed.cmdCompactBtn {
+	/* No border */
+	background-image: gradient(linear, left top, left bottom, from(#EAD1B2),
+		color-stop(49%, #FCD38A), color-stop(50%, #FBC05A), to(#FDE79B) );
+  	padding: 5px 6px;
+}
+
+
+/* Popup shell that imitates the Commandbar menu */
+Shell.cmdMenuShell {
+  border: 0px;
+  background-color: transparent;
+  
+}
  

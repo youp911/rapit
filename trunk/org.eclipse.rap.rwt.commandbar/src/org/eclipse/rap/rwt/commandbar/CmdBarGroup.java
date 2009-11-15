@@ -30,7 +30,7 @@ public class CmdBarGroup {
 	private List<CmdBarButton> buttons;
 	private boolean buttonListHasChanged = false;
 	
-	public CmdBarGroup(final CmdBar parent, int style) {
+	public CmdBarGroup(final CmdBar parent, int style, final String customVariant) {
 		grpContainer = new Composite(parent.getContainer(), SWT.NONE);
 		parent.addNewGroup(this);
 		grpContainer.setLayoutData(new GridData(GridData.FILL_VERTICAL));
@@ -47,7 +47,7 @@ public class CmdBarGroup {
 		containerLayout.marginWidth = 0;
 		containerLayout.verticalSpacing = 0;
 		grpContainer.setLayout(containerLayout );
-		grpContainer.setData(WidgetUtil.CUSTOM_VARIANT, "cmdGroupFrame");
+		grpContainer.setData(WidgetUtil.CUSTOM_VARIANT, customVariant);
 		
 		group = new Composite(grpContainer, style);
 		group.setData(WidgetUtil.CUSTOM_VARIANT, "cmdGroup");
@@ -56,6 +56,7 @@ public class CmdBarGroup {
 		label = new Label(grpContainer, SWT.NONE);
 		GridData layoutData = new GridData(GridData.FILL_HORIZONTAL);
 		label.setLayoutData(layoutData);
+		label.setAlignment(SWT.CENTER);
 		label.setData(WidgetUtil.CUSTOM_VARIANT, "cmdGroupLabel");
 		
 		GridLayout layout = new GridLayout(2, false);
@@ -107,6 +108,9 @@ public class CmdBarGroup {
 		CmdBarButton btn = new CmdBarButton(getGrpContainer());
 		btn.getBtn().setText(label.getText());
 		btn.getBtn().setAlignment(SWT.CENTER);
+		// Override default variant (no border needed)
+		btn.getBtn().setData(WidgetUtil.CUSTOM_VARIANT, "cmdCompactBtn");
+		
 		layoutData = new GridData(GridData.FILL_BOTH);
 		layoutData.minimumWidth = CommandBarFactory.LARGE_BUTTON_MINIMUM_WIDTH;
 		layoutData.minimumHeight = getUncompactedHeight() - 5; //TODO: 5 is container GridLayout#horizontalSpacing
@@ -115,7 +119,7 @@ public class CmdBarGroup {
 		// Attach menu
 		CommandBarFactory factory = new CommandBarFactory();
 		final CmdBarMenu menu = factory.createMenu(btn);
-		final CmdBarGroup menuGroup = factory.createGroup(menu.getCmdBar());
+		final CmdBarGroup menuGroup = factory.createMenuGroup(menu.getCmdBar());
 		menu.addCmdBarMenuListener(new ICmdBarMenuListener() {
 			
 			public void beforeOpen() {
@@ -141,6 +145,9 @@ public class CmdBarGroup {
 					menu.close();
 				}
 			};
+			
+			// Copy base label text
+			menuGroup.setText(getText());
 			
 			// Copy content to menu
 			CommandBarFactory factory = new CommandBarFactory();
