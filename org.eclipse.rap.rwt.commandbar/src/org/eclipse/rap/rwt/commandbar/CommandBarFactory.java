@@ -10,7 +10,7 @@ public class CommandBarFactory {
 	public static final int LARGE_BUTTON_MINIMUM_WIDTH = 60;
 
 	public CmdBarGroup createGroup(CmdBar parent) {
-		return new CmdBarGroup(parent, SWT.NONE);
+		return new CmdBarGroup(parent, SWT.NONE, "cmdGroupFrame");
 		
 	}
 	
@@ -49,5 +49,9 @@ public class CommandBarFactory {
 	public CmdBarMenu createMenu(CmdBarButton button) {
 		CmdBarMenu menu = new CmdBarMenu(button);
 		return menu;
+	}
+
+	CmdBarGroup createMenuGroup(CmdBar parent) {
+		return new CmdBarGroup(parent, SWT.NONE, "cmdGroupFrameMenu");
 	}
 }

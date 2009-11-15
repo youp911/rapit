@@ -12,9 +12,11 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
@@ -27,9 +29,17 @@ public class Application implements IEntryPoint {
 	public int createUI() {
 		final Display display = new Display ();
 		final Shell shell = new Shell(display, SWT.DIALOG_TRIM | SWT.RESIZE);
+		shell.setText("Resize me");
 		
-		shell.setLayout(new GridLayout(1, false));
-		createContent(shell);
+		GridLayout layout = new GridLayout(1, false);
+		layout.marginWidth = 0;
+		layout.marginHeight = 0;
+		shell.setLayout(layout);
+		Composite container = new Composite(shell, SWT.NONE /*| SWT.BORDER*/);
+		container.setLayout(new FillLayout());
+		container.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		
+		createContent(container);
 		
 		shell.setSize(new Point(400, 180));
 		shell.open ();
@@ -41,11 +51,10 @@ public class Application implements IEntryPoint {
 	}
 
 	
-	public void createContent(final Composite parent) {
+	public Control createContent(final Composite parent) {
 		CommandBarFactory factory = new CommandBarFactory();
 		
 		CmdBar bar = factory.createCmdBar(parent);
-		bar.getControl().setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		
 		CmdBarGroup group1 = factory.createGroup(bar);
 		group1.setText("commands");
@@ -84,5 +93,7 @@ public class Application implements IEntryPoint {
 //		CmdBarButton btnMenu = factory.createLargeButton(groupMenu);
 //		btnMenu.setImage(Utils.loadImage("img1.png"));
 //		btnMenu.setText("Quite a large \ntask to do");
+		
+		return bar.getControl();
 	}
 }
