@@ -88,4 +88,8 @@ public class CmdBarButton {
 	public String toString() {
 		return new StringBuilder(getClass().getName()).append("[").append(getText()).append("]").toString();
 	}
+
+	public void dispose() {
+		getBtn().dispose();
+	}
 }

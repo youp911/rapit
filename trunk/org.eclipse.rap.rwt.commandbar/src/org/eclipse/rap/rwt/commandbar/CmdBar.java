@@ -51,11 +51,13 @@ public class CmdBar {
 					groupWidth += groupX + groupSpacing;
 				}
 				
+				boolean changed = false;
 				// Start compacting groups, starting with the last one
 				for (int i = getGroups().size() - 1; i >= 0; i--) {
 					CmdBarGroup group = getGroups().get(i);
 					
 					if (!group.isCompact() && groupWidth > cmdBarWidth) {
+						changed = true;
 						group.makeCompact();
 						final int oldWidth = groupWidths[i];
 						final int compactWidth = group.getGrpContainer().computeSize(SWT.DEFAULT, SWT.DEFAULT).x;
@@ -63,6 +65,7 @@ public class CmdBar {
 						groupWidth -= oldWidth;
 						groupWidth += compactWidth;
 					} else if (group.isCompact()){
+						changed = true;
 						// TODO: This doesn't work if Group's content changes
 						int widthDelta = group.getUncompactedWidth() - group.getCurrentWidth();
 						if (groupWidth + widthDelta < cmdBarWidth) {
@@ -73,7 +76,9 @@ public class CmdBar {
 					}
 					
 				}
-				commandBar.layout();
+				if (changed) {
+					commandBar.layout();
+				}
 
 			} finally {
 				isWithinHandleResize = false;
