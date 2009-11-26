@@ -1,4 +1,4 @@
-package demo;
+package org.eclipse.rap.rwt.commandbar.demo;
 
 
 import org.eclipse.jface.dialogs.MessageDialog;
