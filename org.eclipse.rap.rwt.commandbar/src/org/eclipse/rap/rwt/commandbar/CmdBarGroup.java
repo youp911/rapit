@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.rap.rwt.commandbar.internal.ICmdBarMenuListener;
+import org.eclipse.rap.rwt.commandbar.internal.Utils;
 import org.eclipse.rwt.lifecycle.WidgetUtil;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
@@ -69,6 +70,10 @@ public class CmdBarGroup {
 		layout.marginRight = 2;
 		layout.marginBottom = 2;
 		group.setLayout(layout);
+	}
+	
+	public void dispose() {
+		this.grpContainer.dispose();
 	}
 
 	public void setText(final String text) {
@@ -232,6 +237,7 @@ public class CmdBarGroup {
 	void addNewButton(CmdBarButton cmdBarButton) {
 		getButtons().add(cmdBarButton);
 		buttonListHasChanged = true;
+		getGrpContainer().getParent().layout(true, true);
 	}
 
 	void removeButton(CmdBarButton cmdBarButton) {

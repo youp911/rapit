@@ -1,4 +1,4 @@
-package org.eclipse.rap.rwt.commandbar;
+package org.eclipse.rap.rwt.commandbar.internal;
 
 import java.io.InputStream;
 
