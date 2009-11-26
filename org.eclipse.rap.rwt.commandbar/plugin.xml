@@ -3,14 +3,6 @@
 <plugin>
 
    <extension
-         point="org.eclipse.rap.ui.entrypoint">
-      <entrypoint
-            class="demo.Application"
-            parameter="hello"
-            id="org.eclipse.rap.rwt.commandbar.Application">
-      </entrypoint>
-   </extension>
-   <extension
          point="org.eclipse.rap.ui.themes">
       <theme
             file="theme/commandbar.css"
