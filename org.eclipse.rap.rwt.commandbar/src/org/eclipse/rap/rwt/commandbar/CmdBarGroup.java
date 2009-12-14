@@ -3,6 +3,7 @@ package org.eclipse.rap.rwt.commandbar;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.rap.rwt.commandbar.internal.FloatingImageLabel;
 import org.eclipse.rap.rwt.commandbar.internal.ICmdBarMenuListener;
 import org.eclipse.rap.rwt.commandbar.internal.Utils;
 import org.eclipse.rwt.lifecycle.WidgetUtil;
@@ -30,6 +31,7 @@ public class CmdBarGroup {
 
 	private List<CmdBarButton> buttons;
 	private boolean buttonListHasChanged = false;
+	private FloatingImageLabel compactArrowLbl;
 	
 	public CmdBarGroup(final CmdBar parent, int style, final String customVariant) {
 		grpContainer = new Composite(parent.getContainer(), SWT.NONE);
@@ -51,7 +53,7 @@ public class CmdBarGroup {
 		grpContainer.setData(WidgetUtil.CUSTOM_VARIANT, customVariant);
 		
 		group = new Composite(grpContainer, style);
-		group.setData(WidgetUtil.CUSTOM_VARIANT, "cmdGroup");
+		group.setData(WidgetUtil.CUSTOM_VARIANT, "transparent");
 		group.setLayoutData(new GridData(GridData.FILL_BOTH));
 		
 		label = new Label(grpContainer, SWT.NONE);
@@ -106,8 +108,12 @@ public class CmdBarGroup {
 			
 			if (this.compactButton == null) {
 				this.compactButton = createCompactButton();
+				// Create a new label that contains the arrow down icon
+				this.compactArrowLbl = new FloatingImageLabel(getGrpContainer(), compactButton.getBtn(), SWT.NONE);
+				compactArrowLbl.getLabel().setImage(Utils.loadImage("arrowDown.png"));
 			}
 			Utils.showControl(compactButton.getBtn());
+			compactArrowLbl.getLabel().setVisible(true);
 			compactButton.getBtn().getParent().layout();
 		}
 	}
@@ -115,8 +121,8 @@ public class CmdBarGroup {
 	private CmdBarButton createCompactButton() {
 		GridData layoutData;
 		CmdBarButton btn = new CmdBarButton(getGrpContainer());
-		btn.getBtn().setText(label.getText());
-		btn.getBtn().setAlignment(SWT.CENTER);
+		btn.setText(label.getText());
+//		btn.getBtn().setAlignment(SWT.CENTER);
 		// Override default variant (no border needed)
 		btn.getBtn().setData(WidgetUtil.CUSTOM_VARIANT, "cmdCompactBtn");
 		
@@ -210,6 +216,7 @@ public class CmdBarGroup {
 			
 			if (this.compactButton != null) {
 				Utils.hideControl(this.compactButton.getBtn());
+				compactArrowLbl.getLabel().setVisible(false);
 			}
 			group.getParent().layout();
 		}

@@ -3,7 +3,11 @@ Composite.cmdBar {
 		color-stop(45%, #D0D7E1), color-stop(46%, #C3CAD4), to(#E8EBF0) );
 }
 
-Group.cmdGroup {
+Group.transparent {
+	background-color: transparent;
+}
+
+Label.transparent {
 	background-color: transparent;
 }
 

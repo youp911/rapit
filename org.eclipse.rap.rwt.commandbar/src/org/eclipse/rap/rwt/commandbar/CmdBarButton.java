@@ -23,10 +23,6 @@ public class CmdBarButton {
 	private BtnStyle style;
 	private CmdBarGroup parentGroup;
 
-	public CmdBarGroup getParentGroup() {
-		return parentGroup;
-	}
-
 	Button getBtn() {
 		return btn;
 	}
@@ -62,7 +58,9 @@ public class CmdBarButton {
 	public void setText(final String text) {
 		if (!getBtn().getText().equals(text)) {
 			getBtn().setText(text);
-			getParentGroup().updateLayout();
+			if (getParentGroup() != null) {
+				getParentGroup().updateLayout();
+			}
 		}
 	}
 
@@ -103,4 +101,10 @@ public class CmdBarButton {
 		getBtn().dispose();
 		getParentGroup().updateLayout();
 	}
+
+
+	public CmdBarGroup getParentGroup() {
+		return parentGroup;
+	}
+	
 }
