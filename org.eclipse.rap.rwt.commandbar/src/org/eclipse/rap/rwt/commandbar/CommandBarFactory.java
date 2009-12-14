@@ -11,7 +11,6 @@ public class CommandBarFactory {
 
 	public CmdBarGroup createGroup(final CmdBar parent) {
 		final CmdBarGroup group = new CmdBarGroup(parent, SWT.NONE, "cmdGroupFrame");
-//		parent.getContainer().layout(true, true);
 		return group;
 	}
 	
@@ -36,9 +35,7 @@ public class CommandBarFactory {
 	}
 	
 	public void removeButton(CmdBarButton btn) {
-		Composite parent = btn.getBtn().getParent();
 		btn.dispose();
-		parent.layout();
 	}
 
 	
@@ -46,7 +43,6 @@ public class CommandBarFactory {
 		final CmdBarButton btn = new CmdBarButton(parent, BtnStyle.LARGE);
 		final GridData layoutData = createLargeButtonLayout();
 		btn.getBtn().setLayoutData(layoutData);
-		btn.getBtn().getParent().layout();
 		return btn;
 	}
 

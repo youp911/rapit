@@ -77,7 +77,11 @@ public class CmdBarGroup {
 	}
 
 	public void setText(final String text) {
-		label.setText(text);
+		if (!label.getText().equals(text)) {
+			label.setText(text);
+			// Update commandbar, because width of group might have changed.
+			updateLayout();
+		}
 	}
 	
 	public String getText() {
@@ -243,6 +247,15 @@ public class CmdBarGroup {
 	void removeButton(CmdBarButton cmdBarButton) {
 		getButtons().remove(cmdBarButton);
 		buttonListHasChanged = true;
+	}
+
+	/**
+	 * Forces an layout update because the content of the group has changed which
+	 * potentially has an impact on the group's size within the commandbar.
+	 */
+	public void updateLayout() {
+		// Update commandbar's layout
+		getGrpContainer().getParent().layout();
 	}
 	
 }

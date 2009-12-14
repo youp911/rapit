@@ -21,6 +21,11 @@ public class CmdBarButton {
 
 	private final Button btn;
 	private BtnStyle style;
+	private CmdBarGroup parentGroup;
+
+	public CmdBarGroup getParentGroup() {
+		return parentGroup;
+	}
 
 	Button getBtn() {
 		return btn;
@@ -29,6 +34,7 @@ public class CmdBarButton {
 	public CmdBarButton(final CmdBarGroup parent, final BtnStyle style) {
 		this(parent.getButtonContainer());
 		this.style = style;
+		this.parentGroup = parent;
 		parent.addNewButton(this);
 		getBtn().addDisposeListener(new DisposeListener() {
 
@@ -46,6 +52,7 @@ public class CmdBarButton {
 
 	public void setImage(final Image image) {
 		getBtn().setImage(image);
+		getParentGroup().updateLayout();
 	}
 
 	public Image getImage() {
@@ -53,7 +60,10 @@ public class CmdBarButton {
 	}
 
 	public void setText(final String text) {
-		getBtn().setText(text);
+		if (!getBtn().getText().equals(text)) {
+			getBtn().setText(text);
+			getParentGroup().updateLayout();
+		}
 	}
 
 	public String getText() {
@@ -91,5 +101,6 @@ public class CmdBarButton {
 
 	public void dispose() {
 		getBtn().dispose();
+		getParentGroup().updateLayout();
 	}
 }
