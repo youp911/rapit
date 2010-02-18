@@ -100,11 +100,9 @@ Button[PUSH].cmdCompactBtn:pressed {
 
 
 /* Popup shell that imitates the Commandbar menu */
-/*
 Shell.cmdMenuShell {
   border: 0px;
   background-color: transparent;
   
 }
-*/
  
