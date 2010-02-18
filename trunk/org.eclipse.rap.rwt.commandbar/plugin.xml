@@ -3,20 +3,12 @@
 <plugin>
 
    <extension
-         point="org.eclipse.rap.ui.themes">
-      <theme
-            file="theme/commandbar.css"
-            id="org.eclipse.rap.rwt.commandbar.theme"
-            name="Commandbar Theme">
-      </theme>
-   </extension>
-   <extension
-         point="org.eclipse.rap.ui.branding">
-      <branding
-            id="org.eclipse.rap.rwt.commandbar.branding"
-            servletName="rap"
-            themeId="org.eclipse.rap.rwt.commandbar.theme">
-      </branding>
+         point="org.eclipse.rap.ui.themeableWidgets">
+      <widget
+            class="org.eclipse.rap.rwt.commandbar.themable.CommandBar"
+            id="org.eclipse.rap.rwt.commandbar.themable.CommandBar"
+            name="CommandBar">
+      </widget>
    </extension>
 
 </plugin>
