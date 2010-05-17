@@ -19,7 +19,7 @@ public class CmdBar {
 	
 	private boolean isWithinHandleResize = false;
 	
-	public CmdBar(final Composite parent) {
+	CmdBar(final Composite parent) {
 		commandBar = new Composite(parent, SWT.NONE);
 		commandBar.setData(WidgetUtil.CUSTOM_VARIANT, "cmdBar");
 		commandBar.addControlListener(new ControlAdapter() {

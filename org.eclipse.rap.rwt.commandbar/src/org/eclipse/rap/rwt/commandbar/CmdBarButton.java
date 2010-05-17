@@ -27,7 +27,7 @@ public class CmdBarButton {
 		return btn;
 	}
 
-	public CmdBarButton(final CmdBarGroup parent, final BtnStyle style) {
+	CmdBarButton(final CmdBarGroup parent, final BtnStyle style) {
 		this(parent.getButtonContainer());
 		this.style = style;
 		this.parentGroup = parent;
