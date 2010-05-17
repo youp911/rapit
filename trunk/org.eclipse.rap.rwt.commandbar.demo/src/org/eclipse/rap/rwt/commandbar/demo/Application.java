@@ -2,13 +2,17 @@ package org.eclipse.rap.rwt.commandbar.demo;
 
 
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.rap.rwt.commandbar.CmdBar;
 import org.eclipse.rap.rwt.commandbar.CmdBarButton;
 import org.eclipse.rap.rwt.commandbar.CmdBarGroup;
 import org.eclipse.rap.rwt.commandbar.CommandBarFactory;
 import org.eclipse.rap.rwt.commandbar.CmdBarButton.BtnStyle;
 import org.eclipse.rwt.lifecycle.IEntryPoint;
+import org.eclipse.rwt.lifecycle.WidgetUtil;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.CTabFolder;
+import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -23,6 +27,9 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.TabFolder;
+import org.eclipse.swt.widgets.TabItem;
+import org.eclipse.swt.widgets.Text;
 
 /**
  * This class controls all aspects of the application's execution
@@ -53,6 +60,12 @@ public class Application implements IEntryPoint {
 		final Control ctrl = createContent(cmdBarContainer);
 		ctrl.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		
+//		// TEst button
+//		createTestButton(cmdBarContainer, "animation");
+//		createTestButton(cmdBarContainer, "animationBorder");
+//		createTestButton(cmdBarContainer, "animationBackground");
+//		createTestButton(cmdBarContainer, "animationBackgroundImage");
+		
 		final Composite controlContainer = new Composite(sashForm, SWT.BORDER);
 		controlContainer.setLayout(new FillLayout());
 		createControlBar(controlContainer);
@@ -67,6 +80,14 @@ public class Application implements IEntryPoint {
 		}
 		display.dispose ();
 		return 0;
+	}
+
+
+	private void createTestButton(final Composite parent, String variant) {
+		Button test = new Button(parent, SWT.PUSH);
+		test.setText("Variant: " + variant);
+		test.setData(WidgetUtil.CUSTOM_VARIANT, variant);
+		GridDataFactory.fillDefaults().applyTo(test);
 	}
 
 	
@@ -137,6 +158,48 @@ public class Application implements IEntryPoint {
 			}
 		});
 		
+		lbl = new Label(container, SWT.SEPARATOR | SWT.HORIZONTAL);
+		GridDataFactory.fillDefaults().grab(true, false).applyTo(lbl);		
+		
+		Composite colCountContainer = new Composite(container, SWT.NONE);
+		colCountContainer.setLayout(new GridLayout(3, false));
+		GridDataFactory.fillDefaults().grab(true, false).applyTo(colCountContainer);
+		
+		lbl = new Label(colCountContainer, SWT.NONE);
+		lbl.setText("Colums");
+		GridDataFactory.fillDefaults().applyTo(lbl);		
+		
+		final Text colText = new Text(colCountContainer, SWT.BORDER);
+		GridDataFactory.fillDefaults().grab(true, false).applyTo(colText);
+		colText.setText("2");
+		
+		btn = new Button(colCountContainer, SWT.PUSH);
+		btn.setText("Apply");
+		GridDataFactory.fillDefaults().applyTo(btn);
+		
+		btn.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				Object selected = creator.getSelectedWidget();
+				if (selected instanceof CmdBarGroup) {
+					final int newColCount = Integer.valueOf(colText.getText());
+					((CmdBarGroup)selected).setColumnCount(newColCount);
+				}
+			}
+		});
+		
+		cmbCreateWidgets.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				Object selected = creator.getSelectedWidget();
+				if (selected instanceof CmdBarGroup) {
+					final int colCount = ((CmdBarGroup)selected).getColumnCount();
+					colText.setText(String.valueOf(colCount));
+				} else {
+					colText.setText("");
+				}
+			}
+		});
 		
 		return container;
 	}
@@ -146,6 +209,7 @@ public class Application implements IEntryPoint {
 		final CommandBarFactory factory = new CommandBarFactory();
 		
 		cmdBar = factory.createCmdBar(parent);
+		
 		
 		final CmdBarGroup group1 = factory.createGroup(cmdBar);
 		group1.setText("commands");

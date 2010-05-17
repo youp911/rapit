@@ -33,7 +33,11 @@ public class CmdBarGroup {
 	private boolean buttonListHasChanged = false;
 	private FloatingImageLabel compactArrowLbl;
 	
-	public CmdBarGroup(final CmdBar parent, int style, final String customVariant) {
+	private static int DEFAULT_COLUMN_COUNT = 2;
+	
+	private final GridLayout groupGridLayout;
+	
+	CmdBarGroup(final CmdBar parent, int style, final String customVariant) {
 		grpContainer = new Composite(parent.getContainer(), SWT.NONE);
 		parent.addNewGroup(this);
 		grpContainer.setLayoutData(new GridData(GridData.FILL_VERTICAL));
@@ -62,18 +66,18 @@ public class CmdBarGroup {
 		label.setAlignment(SWT.CENTER);
 		label.setData(WidgetUtil.CUSTOM_VARIANT, "cmdGroupLabel");
 		
-		GridLayout layout = new GridLayout(2, false);
-		layout.marginHeight = 0;
-		layout.marginWidth = 0;
-		layout.horizontalSpacing = 0;
-		layout.verticalSpacing = 0;
-		layout.marginLeft = 2;
-		layout.marginTop = 2;
-		layout.marginRight = 2;
-		layout.marginBottom = 2;
-		group.setLayout(layout);
+		groupGridLayout = new GridLayout(DEFAULT_COLUMN_COUNT, false);
+		groupGridLayout.marginHeight = 0;
+		groupGridLayout.marginWidth = 0;
+		groupGridLayout.horizontalSpacing = 0;
+		groupGridLayout.verticalSpacing = 0;
+		groupGridLayout.marginLeft = 2;
+		groupGridLayout.marginTop = 2;
+		groupGridLayout.marginRight = 2;
+		groupGridLayout.marginBottom = 2;
+		group.setLayout(groupGridLayout);
 	}
-	
+
 	public void dispose() {
 		this.grpContainer.dispose();
 	}
@@ -94,11 +98,11 @@ public class CmdBarGroup {
 		return group;
 	}
 
-	public boolean isCompact() {
+	boolean isCompact() {
 		return this.compact;
 	}
 
-	public void makeCompact() {
+	void makeCompact() {
 		if (!isCompact()) {
 			this.compact = true;
 			this.uncompactedWidth = getCurrentWidth();
@@ -208,7 +212,7 @@ public class CmdBarGroup {
 		return grpContainer;
 	}
 
-	public void unmakeCompact() {
+	void unmakeCompact() {
 		if (isCompact()) {
 			this.compact = false;
 			Utils.showControl(group);
@@ -228,15 +232,15 @@ public class CmdBarGroup {
 		return buttons;
 	}
 
-	public int getUncompactedHeight() {
+	int getUncompactedHeight() {
 		return uncompactedHeight;
 	}
 
-	public int getCurrentWidth() {
+	int getCurrentWidth() {
 		return getGrpContainer().getSize().x;
 	}
 	
-	public int getCurrentHeight() {
+	int getCurrentHeight() {
 		return getGrpContainer().getSize().y;
 	}
 
@@ -260,9 +264,20 @@ public class CmdBarGroup {
 	 * Forces an layout update because the content of the group has changed which
 	 * potentially has an impact on the group's size within the commandbar.
 	 */
-	public void updateLayout() {
+	void updateLayout() {
 		// Update commandbar's layout
-		getGrpContainer().getParent().layout();
+		getGrpContainer().getParent().getParent().layout(true, true);
+	}
+
+	public void setColumnCount(int columnCount) {
+		if (this.groupGridLayout.numColumns != columnCount) {
+			this.groupGridLayout.numColumns = columnCount;
+			updateLayout();
+		}
+	}
+	
+	public int getColumnCount() {
+		return this.groupGridLayout.numColumns;
 	}
 	
 }

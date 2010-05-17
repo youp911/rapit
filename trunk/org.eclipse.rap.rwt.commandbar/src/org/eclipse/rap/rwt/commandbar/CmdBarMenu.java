@@ -23,7 +23,7 @@ public class CmdBarMenu {
 	private final Button parentBtn;
 	private List<ICmdBarMenuListener> listeners;
 
-	public CmdBarMenu(final CmdBarButton parent) {
+	CmdBarMenu(final CmdBarButton parent) {
 		parentBtn = parent.getBtn();
 		menu = new Shell(parentBtn.getShell(), SWT.NONE);
 		menu.setLayout(new FillLayout());
@@ -65,7 +65,7 @@ public class CmdBarMenu {
 		menu.open();
 	}
 	
-	public CmdBar getCmdBar() {
+	CmdBar getCmdBar() {
 		return cmdBar;
 	}
 
@@ -86,11 +86,11 @@ public class CmdBarMenu {
 	}
 
 	
-	public void addCmdBarMenuListener(final ICmdBarMenuListener listener) {
+	void addCmdBarMenuListener(final ICmdBarMenuListener listener) {
 		getListeners().add(listener);
 	}
 	
-	public void removeCmdBarMenuListener(final ICmdBarMenuListener listener) {
+	void removeCmdBarMenuListener(final ICmdBarMenuListener listener) {
 		getListeners().remove(listener);
 	}
 

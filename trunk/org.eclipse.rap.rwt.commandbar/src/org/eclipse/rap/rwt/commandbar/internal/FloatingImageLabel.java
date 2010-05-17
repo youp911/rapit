@@ -58,7 +58,6 @@ public class FloatingImageLabel  {
 		}
 		Point newLocation = new Point(refSize.x / 2 - labelBounds.width / 2, refLocation.height - labelBounds.height - 15);
 		getLabel().setBounds(newLocation.x, newLocation.y, labelBounds.width, labelBounds.height);
-		System.out.println("Floating at " + newLocation);
 	}
 
 

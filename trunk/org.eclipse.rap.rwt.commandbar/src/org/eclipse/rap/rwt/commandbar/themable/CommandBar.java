@@ -11,7 +11,7 @@ import org.eclipse.swt.widgets.Control;
  * @deprecated
  */
 @Deprecated
-public class CommandBar extends Control {
+class CommandBar extends Control {
 
 	public CommandBar(Composite parent, int style) {
 		super(parent, style);

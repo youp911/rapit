@@ -106,3 +106,38 @@ Shell.cmdMenuShell {
   
 }
  
+ 
+ 
+/**
+ TESTING STUFF
+
+*/
+Button[PUSH].animation {
+  	background-color: rgb( 12, 227, 243 );
+	animation: hoverIn 200ms linear, hoverOut 500ms ease-out;
+}
+
+Button[PUSH].animationBorder {
+  	background-color: rgb( 12, 227, 243 );
+	animation: hoverIn 200ms linear, hoverOut 500ms ease-out;
+	border: 1px solid #C8C8C8;
+	border-radius: 6px;
+}
+
+Button[PUSH].animationBackground {
+  	background-color: rgb( 12, 227, 243 );
+	animation: hoverIn 200ms linear, hoverOut 500ms ease-out;
+}
+
+Button[PUSH].animationBackground:hover {
+  	background-color: rgb( 12, 245, 245 );
+}
+
+Button[PUSH].animationBackgroundImage {
+	animation: hoverIn 200ms linear, hoverOut 500ms ease-out;
+}
+
+Button[PUSH].animationBackgroundImage:hover {
+	background-image: gradient(linear, left top, left bottom, from(#ffffff),
+	color-stop(49%, #FFECAC), color-stop(50%, #FFDA59), to(#FFFCDF) );
+}
